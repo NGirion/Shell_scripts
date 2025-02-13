@@ -1558,3 +1558,16 @@ display_system_info() {
 # Call the function to display system info
 display_system_info
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Directory to search for files
+directory="/path/to/directory"
+
+# Size threshold (e.g., 100M for 100MB, 1G for 1GB)
+size_threshold="100M"
+
+# Find and delete files larger than the specified size
+find "$directory" -type f -size +"$size_threshold" -exec rm -f {} \;
+
+echo "Files larger than $size_threshold have been deleted."
