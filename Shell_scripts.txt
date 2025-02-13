@@ -1,0 +1,1560 @@
+Hello World using variables:
+
+<<comment
+Author: Giridhar
+Description: To run sample commands
+Start Date: 28/01/2025
+comment
+
+#!/bin/bash
+
+# Defining variable and assigning to the value
+whom="Hello"
+
+# Printing the output
+printf "Hello, %s\n" "$whom"
+echo "Hello, $whom"
+cat <<< "Hello, $whom"
+
+-------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Your script commands
+whom="World"
+printf "Hello, %s\n" "$whom"
+echo "Hello, $whom"
+cat <<< "Hello, $whom"
+date
+pwd
+uptime
+whoami
+uname
+
+# Reschedule the script to run in 2 minutes
+echo "/path/to/sample.sh" | at now + 2 minutes
+
+----------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Infinite loop to run every 2 minutes
+while true; do
+    # Your script commands
+    whom="World"
+    printf "Hello, %s\n" "$whom"
+    echo "Hello, $whom"
+    cat <<< "Hello, $whom"
+    date
+    pwd
+    uptime
+    whoami
+    uname
+
+    # Sleep for 2 minutes (120 seconds)
+    sleep 120
+done
+
+------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Redirect output to a log file
+LOG_FILE="/path/to/sample_script.log"
+
+# Your script commands
+whom="World"
+{
+    printf "Hello, %s\n" "$whom"
+    echo "Hello, $whom"
+    cat <<< "Hello, $whom"
+    date
+    pwd
+    uptime
+    whoami
+    uname
+} >> "$LOG_FILE" 2>&1  # Append both stdout and stderr to the log file
+
+# Optional: Reschedule the script for every 2 minutes
+echo "/path/to/sample.sh" | at now + 2 minutes
+
+
+==================================================================================================================
+
+                         READ Command:
+#!/bin/bash
+echo "who are you?"
+read name
+echo "My name is $name"
+
+---------------------------------------------------------------------------------------------------------
+                            Using Read Prompt (-p):
+
+#!/bin/bash
+read -p "who are you?" name
+echo "This is $name"
+==============================================================================================================================================================
+
+                             Reading multiple values:
+#!/bin/bash
+
+echo "what is your name?"
+read name
+
+echo "where do you live?"
+read place
+
+echo "What do you do for a living?"
+read profession
+
+echo "My name is $name. I live in $place. I'm a $profession"
+=========================================================================================================================================================
+                              Reading input with Timeout:
+
+#!/bin/bash
+
+read -t 10 -p "Enter your password: " password
+
+if [ -z "$password" ]; then
+   echo "No password entered within 10 seconds or entered an empty password."
+else
+   echo "Password entered: $password"
+fi
+
+
+Here’s a breakdown of how the script works:
+
+1. `read -t 10 -p "Enter your password: " password`: This line prompts the user to enter a password with a timeout of 10 seconds. If no input is provided in that time, `read` will return a non-zero exit code.
+   
+2. `if [ -z "$password" ]; then`: This checks whether the password variable is empty, either because the user didn’t enter anything or the timeout expired.
+   
+3. `echo "No password entered within 10 seconds or entered an empty password."`: If the password is empty, this message is printed.
+   
+4. `else`: If the password is not empty (i.e., a value was entered), the script prints the entered password.
+
+### A couple of things to consider:
+- **Security concern**: Printing the password in plain text (`echo "Password entered: $password"`) can be a security risk. You might want to avoid printing the password or handle it securely.
+  
+- **Timeout handling**: When using `read -t`, if the timeout occurs, it will leave the variable `password` empty. In your current script, this is handled by the check `[ -z "$password" ]`.
+
+### Example output:
+
+1. **If the user enters a password in time**:
+   ```
+   Enter your password: mypassword
+   Password entered: mypassword
+   ```
+
+2. **If no password is entered or the timeout expires**:
+   
+   Enter your password: 
+   No password entered within 10 seconds or entered an empty password.
+=====================================================================================================================================================================
+
+                                    Reading input securely (silently) :
+
+#!/bin/bash
+
+read -s -p "Enter your password :" password
+echo    # move to a new line after password input
+echo "password entered."
+
+=================================================================================================================================================================
+
+                                  ARITHMATIC OPERATIONS"
+
+#!/bin/bash
+
+# Arithmatic operators
+
+a=20
+b=5
+
+echo "a=$a, b=$b"
+
+echo "a+b= $((a+b))"
+
+echo "a-b= $((a-b))"
+
+echo "a*b= $((a*b))"
+
+echo "a/b= $((a/b))"
+
+echo "a%b= $((a%b))"
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                             Comparison Operators:
+
+#!/bin/bash
+
+a=20
+b=30
+
+echo "comparison operations"
+
+if [ $a -eq $b ]; then
+   echo "a is equal to b"
+fi
+
+if [ $a -ne $b ]; then
+   echo "a is not equal to b"
+fi
+
+if [ $a -gt $b ]; then
+   echo "a is greater than b"
+fi
+
+if [ $a -lt $b ]; then
+   echo "a is less than b"
+fi
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                       Logical operators :
+
+#!/bin/bash
+
+a=30
+b=5
+
+echo "Logical operations"
+
+if [ $a -eq 20 ] && [ $b -eq 5 ]; then
+   echo "Both conditions are true"
+fi
+
+if [ $a -eq 10 ] || [ $b -eq 5 ]; then
+   echo "atleast one condition is true"
+fi
+
+if ! [ $a -eq 0 ]; then
+   echo "a is not equal to 0"
+fi
+
+The script you've written demonstrates logical operators in action. Let's break it down to see how it works:
+
+```bash
+#!/bin/bash
+
+a=30
+b=5
+
+echo "Logical operations"
+
+# AND operator (&&)
+if [ $a -eq 20 ] && [ $b -eq 5 ]; then
+   echo "Both conditions are true"
+fi
+```
+
+- **Condition 1**: `[ $a -eq 20 ]` checks if `a` equals 20 (which it doesn't, since `a` is 30).
+- **Condition 2**: `[ $b -eq 5 ]` checks if `b` equals 5 (which is true).
+- The `&&` operator requires **both conditions to be true**. Since the first condition is false, the entire statement evaluates to false, so nothing gets printed here.
+
+---
+
+```bash
+# OR operator (||)
+if [ $a -eq 10 ] || [ $b -eq 5 ]; then
+   echo "atleast one condition is true"
+fi
+```
+
+- **Condition 1**: `[ $a -eq 10 ]` checks if `a` equals 10 (false, since `a` is 30).
+- **Condition 2**: `[ $b -eq 5 ]` checks if `b` equals 5 (true, since `b` is 5).
+- The `||` operator requires **at least one condition to be true**. Since the second condition is true, the whole statement evaluates to true, so `atleast one condition is true` will be printed.
+
+---
+
+```bash
+# NOT operator (!)
+if ! [ $a -eq 0 ]; then
+   echo "a is not equal to 0"
+fi
+```
+
+- The `!` negates the condition `[ $a -eq 0 ]`, which checks if `a` equals 0. Since `a` is 30, this condition is false.
+- The `!` negates it, so the whole condition becomes true (`a is not equal to 0`), and the message `a is not equal to 0` will be printed.
+
+---
+
+### Output:
+
+```
+Logical operations
+atleast one condition is true
+a is not equal to 0
+```
+
+### Summary:
+- The first condition (`&&`) didn't print anything because both conditions were not true.
+- The second condition (`||`) printed the message because at least one condition was true.
+- The third condition (`!`) printed the message because `a` was indeed not equal to 0.
+==============================================================================================================================================================
+
+                                             STRING OPERATIONS:
+
+
+#!/bin/bash
+
+stra="Hello"
+strb="satish"
+
+echo "string operations"
+
+if [ "$stra" = "$strb" ]; then
+   echo "Strings are equal"
+fi
+
+if [ "$stra" != "$strb" ]; then
+   echo "Strings are not equal"
+fi
+
+strc="$stra $strb"
+echo "concatenated string: $strc"
+length=${#stra}
+echo "Length of stra is $length"
+
+
+This is a basic shell script demonstrating string operations in Bash. Let's go through each section:
+
+1. **String Comparison (`=` and `!=`)**:  
+   The script checks if two strings, `stra` and `strb`, are equal or not. 
+   - `=` is used to check equality.
+   - `!=` is used to check inequality.
+
+2. **String Concatenation**:  
+   The strings `stra` and `strb` are concatenated and stored in `strc`. The result is printed.
+
+3. **Length of a String**:  
+   The length of the string `stra` is calculated using `${#stra}` and displayed.
+
+### Expected Output:
+```
+string operations
+Strings are not equal
+concatenated string: Hello satish
+Length of stra is 5
+```
+
+This script does its job well! Anything you'd like to modify or add to it?
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+                                      if and else statement:
+
+#!/bin/bash
+a=11
+
+if [  $a -eq 10 ]; then
+   echo "Both are equal"
+else
+   echo "Both are not equal"
+fi
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+file="sample.sh"
+
+if [ -f "$file" ]; then
+   echo "file $file exists"
+else
+   echo "file $file doesn't exist. Creating the file..."
+   touch "$file"  # This creates the file if it doesn't exist
+   echo "file $file has been created."
+fi
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+ping_result=$(ping -c 1 google.com 2>&1)
+
+if [[ $ping_result == *"icmp_seq"*]]; then
+   echo "Internet connectivity is up"
+else
+   echo "Internet connectivity is down"
+fi
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+directory="myproject"
+
+if [ -d "$directory" ] ; then
+
+sh_files=$(find myproject -type f -name "*.sh")
+
+if [ -n "$sh_files" ]; then
+        echo "found the following .sh files in myproject directory"
+
+        echo "===================================================="
+
+        IFS=$'\n'
+for file in $sh_files
+        echo "$file"
+done
+
+else
+        echo "No .sh files found in myproject directory"
+fi
+
+else
+        echo "myproject directory doesn't exists"
+
+fi
+
+		
+
+=====================================================================================================================================================================
+
+                                                IF-ELIF-ELSE STATEMENT:
+
+#!/bin/bash
+a=25
+
+if [ $a -eq 10 ]; then
+   echo "Value of a is 10"
+elif [ $a -ne 20 ]; then
+   echo "value of a is not 20"
+else
+   echo "value of a is neither 10 nor 20"
+fi
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+      To check disk space:
+
+#!/bin/bash
+
+# To check disk usage using if-elif-else statement
+
+threshold_critical=20
+threshold_warning=18
+current_usage=$(df -h / | awk 'NR==2 {print $5}' | cut -d'%' -f1)
+
+echo "Current disk usage: $current_usage%"
+
+# Define color codes
+RED='\033[31m'
+GREEN='\033[32m'
+YELLOW='\033[33m'
+RESET='\033[0m'
+
+if [ $current_usage -ge $threshold_critical ]; then
+    echo -e "${RED}Disk usage is critical ($current_usage%). Take immediate action${RESET}"
+elif [ $current_usage -ge $threshold_warning ]; then
+    echo -e "${YELLOW}Disk usage is high ($current_usage%). Consider freeing up space.${RESET}"
+else
+    echo -e "${GREEN}Disk usage is normal ($current_usage%).${RESET}"
+fi
+
+
+
+
+### 1. Save your script:
+First, make sure your script is saved, for example as `disk_usage_check.sh`, in a directory (e.g., `/home/user/scripts/`).
+
+### 2. Give the script executable permissions:
+
+chmod +x /home/user/scripts/disk_usage_check.sh
+
+### 3. Edit the crontab:
+Now, you can set up the cron job to run the script periodically.
+
+1. Open the crontab editor by running:
+
+   crontab -e
+
+
+2. Add a line to the crontab to schedule the script to run at regular intervals. Here are a few examples of timing options:
+
+- To run the script **every hour**:
+  
+  0 * * * * /home/user/scripts/disk_usage_check.sh
+  
+- To run the script **every day at 2 AM**:
+  
+  0 2 * * * /home/user/scripts/disk_usage_check.sh
+  
+- To run the script **every 15 minutes**:
+  
+  */15 * * * * /home/user/scripts/disk_usage_check.sh
+  
+3. After adding the desired cron job, save and exit the editor. (If you're using `vi`, press `Esc`, then type `:wq` to save and exit.)
+
+### 4. Verify the cron job:
+
+To confirm that the cron job was successfully added, you can check the list of cron jobs for your user by running:
+
+
+crontab -l
+
+You should see your newly added cron job listed.
+
+### 5. Monitor the output:
+
+By default, cron will send the script's output to your local mailbox. To check it, you can use the `mail` command (if it's installed and configured). If you'd like the output to go directly to a specific email, you can modify the cron job as follows:
+
+0 * * * * /home/user/scripts/disk_usage_check.sh | mail -s "Disk Usage Check Report" your-email@example.com
+
+This will send the output of the script to your email after each run.
+Now, your script will be executed on the schedule you’ve chosen, and you’ll receive alerts if the disk usage crosses the defined thresholds.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                            	CASE STATEMENT:
+case statement is used to perform different actions based on the value of a variable or expression.
+
+#!/bin/bash
+
+# Example of a case statement
+
+$fruit="apple"
+
+case $fruit in
+     Banana)
+           echo "It's a fruit: Banana"
+           ;;
+
+     orange)
+           echo "It's a fruit: orange"
+           ;;
+
+     apple)
+          echo "It's a fruit: apple"
+          ;;
+
+     *)
+          echo "Unknown fruit"
+          ;;
+esac
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Example of a case statement
+
+echo "Menu."
+echo "======"
+echo "1. Display the date"
+echo "2. Display the calendar"
+echo "3. Display the current directory"
+echo "4. Exit"
+
+read -p "Enter your choice: " choice
+
+case $choice in
+
+     1)
+        date
+        ;;
+
+     2)
+        cal
+        ;;
+
+     3)
+        pwd
+        ;;
+
+     4)
+        echo "Exiting the program...."
+        exit
+        ;;
+
+     *)
+        echo "Invalid choice: $choice. Please enter a number between 1 and 4."
+        ;;
+esac
+   
+======================================================================================================================================
+
+                                                                                      LOOPS:
+ 
+ A) For loop:    This is used to execute a block of code repeatedly for specified number of times																													  
+ 
+ #!/bin/bash
+ 
+ # Example of for loop 
+ for num in 1 2 3 4 5
+ do
+          echo "Number: $num"
+done	
+
+#!/bin/bash: 
+This is the shebang line that tells the system this file should be interpreted by the Bash shell.
+
+for num in 1 2 3 4 5: This defines the loop. The loop iterates through the numbers 1, 2, 3, 4, 5. Each number is assigned to the variable num in each iteration.
+
+do: Marks the start of the block of code that should be executed for each iteration.
+
+echo "Number: $num": This prints the value of num to the terminal.
+
+done: Marks the end of the loop.																													 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Example of for loop to listout all files and folders
+for file in *
+do 
+    echo "$file"
+done
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Example of for loop to listout only .sh extension files
+
+for file in *.sh
+do
+echo "$file"
+done
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                                         NESTED FOR LOOP:
+
+This is used when you have a for loop inside another for loop. This is useful when you need to iterate through multiple set of values														 
+
+#!/bin/bash
+
+# Example of nested for loop
+
+for i in {1..3}
+do 
+        for j in {1..3}
+		do 
+		       echo -n "$(( i * j )) "
+		done
+		echo 
+		
+done
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                                                                 WHILE LOOP:  While loop executes a block of code as long as specified condition is true.		
+																				 
+#!/bin/bash
+
+a=3
+
+while [ $a  -le 3 ]; do
+
+        echo "$a"
+        ((a++))
+
+done
+																				 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -----------------------------------------
+
+
+#!/bin/bash
+
+# Example of a while loop processing user input unitl exit is entered
+
+echo "Enter names (type 'exit' to 'quit):'"
+
+while  true ;
+do 
+            read -p "Name: " name
+			if [ "$name" =  "exit" ]; then
+			       break
+			fi
+			
+			echo "Hello ------> $name!"
+done
+
+echo "You are exited"			
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Example of a while loop to calculate a factorial of a number
+
+echo "Enter a number to calculate its factorial:"
+read num
+
+# Initialize factorial variable
+factorial=1
+counter=$num
+
+# Loop to calculate the factorial
+while [ $counter -gt 0 ]; do
+    factorial=$(( factorial * counter ))  # Multiply current factorial with counter
+    ((counter--))  # Decrease the counter by 1
+done
+
+echo "Factorial of $num is: $factorial"
+
+=======================================================================================================================================
+
+
+                                                                                          UNTIL LOOP: It is used to repeatedly to execute the block of code as long as condition is false. loop stops when condition becomes true
+#!/bin/bash
+
+# Example of until loop
+
+value=1
+
+until [ $value -gt 5 ] ; do
+            echo "value is $value"																						  
+			((value++))
+done
+			
+																						  
+==================================================================================================================================
+
+
+                                                                  ARRAYS: These are the indexed collection of values which can be accessed  and manipulated under single variabe.
+							
+#!/bin/bash
+
+# Example of defining an array
+
+fruits=("Apple" "Banana" "Orange" "Pine apple")
+
+# Accessing the elements of an array
+
+echo "${fruits[0]}"
+
+echo "${fruits[2]}"
+
+echo "${fruits[1]}"
+
+echo "${fruits[3]}"
+
+echo "${fruits[2]}"
+
+fruits+=("Mango")
+
+echo "${fruits[4]}"
+
+# To find the length of an array
+
+echo "Length of the array is ${#fruits[@]}"
+
+echo "Length of the array is ${#fruits[@]}"
+
+for element in "${fruits[@]}"; do
+        echo "$element"
+done
+
+fruits=()
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Defining an associative array
+
+declare -A fruits
+
+# Addition of elements to the associative array
+
+fruits["apple"]="red"
+
+fruits["Banana"]="yellow"
+
+fruits["Grapes"]="purple"
+
+# Accessing the values using keys
+
+echo "The color of the apple is: ${fruits["apple"]}"
+
+echo "The color of the banana is: ${fruits["Banana"]}"
+
+echo "The color of grapes is: ${fruits["Grapes"]}"
+
+fruits["Lime"]="Green"
+
+echo "The color of the lime is ${fruits["Lime"]}"
+
+# Looping through the keys and values
+
+echo "List of fruits and their colors:"
+for fruit in "${!fruits[@]}"; do
+        echo "$fruit is ${fruits[$fruit]}"
+done
+
+# Clearing all elements in the array
+unset fruits  # or use unset fruits[@]
+
+# Find the length of an array
+
+echo "The length of the array is ${#fruits[@]}"
+							
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+																									   
+								                                                                         ITERATING OVER AN ARRAY and DELETING ELEMENTS IN ARRAY
+																										 
+#!/bin/bash
+
+# Example of defining an array
+
+fruits=("Apple" "Banana" "Orange" "Pine apple")
+
+unset fruits[3]
+for element in "${fruits[@]}"; do
+        echo "$element"
+done
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Declare an array to store file names
+declare -a files=()
+
+# Populate the array with file names ending .sh in current directory
+files=(*.sh)
+
+# Iterate over each file and count the lines of each file
+for file in "${files[@]}"; do 
+                  line_count=$(wc -l  < "$file")
+				  echo "File: $file has $line_count lines."
+done				  
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# store command line arguements in an array
+args=("$@")
+
+# Display / accessing arguements
+
+for arg in "${args[@]}"; do
+                   echo "$arg"
+done
+
+echo "Length of the array is ${#args[@]}"				   
+   
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------     
+
+#!/bin/bash
+
+# Array of menu options
+declare -a menu=("option 1: array.sh" "option 2: arrays.sh" "option 3: casestatement.sh" "option 4: Exit")
+
+# Display menu options 
+echo "Select an option:"
+select option in "${menu[@]}"; do
+    case $REPLY in
+        1) 
+            ./array.sh
+            ;;
+        2)
+            ./arrays.sh
+            ;;
+        3)
+            ./casestatement.sh
+            ;;
+        4)
+            echo "Exiting..."
+            break
+            ;;
+        *)
+            echo "Invalid option"
+            ;;
+    esac
+done
+			
+==================================================================================================================================
+
+                                                                                Functions:  Functions allow to encapsulate a set  of commands into reusable block of code.
+																				
+#!/bin/bash
+
+# Defining a function
+
+greet () {
+           echo "Hello Satish"																			
+}		   
+
+# Calling the function
+
+greet
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+greet () {
+            if [ -z  "$1" ]; then
+			echo "Hello satish"
+			else
+			echo "Hello $1"
+			fi
+}
+
+greet Giridhar
+greet			
+			
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+greet() {
+        echo "Welcome, $1 !. The system is up and running"
+}
+
+check_diskspace() {
+        df -h /
+}
+
+check_cpu_usage() {
+        top -bn1 | grep "Cpu(s)"
+
+}
+
+# main program
+greet "Admin"
+check_diskspace
+check_cpu_usage
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+# Define a function
+greet() {
+echo "Hello, $1!" # $1 is the first argument passed to the function
+}
+# Check if a name is passed as an argument
+if [ -z "$1" ]; then
+echo "Please provide a name."
+else
+# Call the function with the argument
+greet "$1"
+fi
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+#  Function to calculate the sum of two numbers
+sum() {
+           local num1="$1"
+		   local num2="$2"
+		   local total=$(( num1 + num2))
+		   echo "sum of $num1 and $num2 is $total"
+}
+
+# Call the function with arguements		   
+sum 10 20 
+
+===================================================================================================================================
+
+#!/bin/bash
+
+# Function to add a user
+add_user() {
+    local username="$1"
+    sudo useradd -m "$username"
+    echo "User $username added/created successfully"
+}
+
+# Function to delete a user
+delete_user() {
+    local username="$1"
+    sudo userdel -r "$username"
+    if [ $? -eq 0 ]; then
+        echo "User $username deleted successfully"
+    else
+        echo "User doesn't exist / Invalid user"
+    fi
+}
+
+# Function to list all users
+list_users() {
+    local users=$(cut -d: -f1 /etc/passwd)
+    echo "List of users:"
+    echo "$users"
+}	
+
+# Main script logic
+echo "Choose an option:"
+echo "Enter 1 to add a user"
+echo "Enter 2 to delete a user"
+echo "Enter 3 to list all users"
+read -p "Enter your choice: " choice
+
+case $choice in
+    1) 
+        read -p "Enter username: " username
+        add_user "$username"
+        ;;
+    2) 
+        read -p "Enter username to delete: " username
+        read -p "Are you sure you want to delete? Press Y to confirm or N to cancel: " decision
+        if [ "$decision" == "Y" ]; then
+            delete_user "$username"
+        else
+            echo "No action needed"
+        fi
+        ;;
+    3) 
+        list_users
+        ;;
+    *)
+        echo "Invalid input. Exiting....."
+        ;;
+esac
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Function to add a user
+add_user() {
+    local username="$1"
+    
+    # Check if the user already exists
+    if id "$username" &>/dev/null; then
+        echo "User $username already exists!"
+    else
+        sudo useradd -m "$username" && echo "User $username added/created successfully" || echo "Failed to create user $username"
+    fi
+}
+
+# Function to delete a user
+delete_user() {
+    local username="$1"
+    
+    # Check if the user exists
+    if id "$username" &>/dev/null; then
+        sudo userdel -r "$username" && echo "User $username deleted successfully" || echo "Failed to delete user $username"
+    else
+        echo "User $username doesn't exist."
+    fi
+}
+
+# Function to list all users
+list_users() {
+    echo "List of users:"
+    cut -d: -f1 /etc/passwd
+}
+
+# Main script logic
+while true; do
+    echo "Choose an option:"
+    echo "Enter 1 to add a user"
+    echo "Enter 2 to delete a user"
+    echo "Enter 3 to list all users"
+    echo "Enter 4 to exit"
+    read -p "Enter your choice: " choice
+
+    case $choice in
+        1) 
+            read -p "Enter username: " username
+            add_user "$username"
+            ;;
+        2) 
+            read -p "Enter username to delete: " username
+            read -p "Are you sure you want to delete? Press Yes to confirm or No to cancel: " decision
+            if [[ "$decision" == "Yes" || "$decision" == "yes" ]]; then
+                delete_user "$username"
+            else
+                echo "No action taken."
+            fi
+            ;;
+        3) 
+            list_users
+            ;;
+        4)
+            echo "Exiting ........."
+            exit 0
+            ;;
+        *)
+            echo "Invalid input. Please choose a valid option."
+            ;;
+    esac
+done
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                                                                          FUNCTIONS WITH ARRAY:
+																						  
+#!/bin/bash
+
+# Creating an array
+my_array=("apple" "Mango" "dates")
+
+# Function to print all the elements of array
+print_array() {
+                local arr=("$@")
+				for item in "${arr[@]}"; do 
+				echo $item
+done
+}
+
+# call the function and pass the array
+print_a
+rray "${my_array[@]}"	
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------		  
+
+                                                                                       DELETING A FILE USING FUNCTIONS:
+
+#!/bin/bash
+
+# Creating a function to delete a file
+
+delete_file() {
+                 if  [ -f "$1" ]; then
+				       echo "Are you sure you want to delete the file '$1' ? (y/n)"
+					   read -r confirmation
+					   if [[ "$confirmation" == "y" || "$confirmation" == "Y" ]]; then
+				       rm -rf "$1"
+				       echo "File $1 deleted successfully"
+				       else
+					   echo "File $1 was not deleted"
+					   fi
+				else
+				      echo "Error: File $1 does not exists"
+				fi
+}
+
+# Calling the function and passing file name as an arguement				
+delete_file "$1"
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+
+# Function to delete a file after confirmation and permission check
+delete_file() {
+  if [ -f "$1" ]; then
+    # Check if the user has write permission on the file
+    if [ -w "$1" ]; then
+      echo "Are you sure you want to delete the file '$1'? (y/n)"
+      read -r confirmation
+      if [[ "$confirmation" == "y" || "$confirmation" == "Y" ]]; then
+        rm "$1"
+        echo "File '$1' deleted successfully."
+      else
+        echo "File '$1' was not deleted."
+      fi
+    else
+      echo "Error: You do not have permission to delete the file '$1'."
+    fi
+  else
+    echo "Error: File '$1' not found."
+  fi
+}
+
+# Example usage
+# Pass the file name as an argument to the delete_file function
+delete_file "$1"
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Function to check disk usage and alert if it exceeds the limit
+check_disk_usage() {
+  # Set the threshold for disk usage (e.g., 80%)
+  THRESHOLD=80
+  
+  # Get the disk usage percentage for the root partition (or modify the path as needed)
+  usage=$(df / --output=pcent | tail -n 1 | tr -d '%')
+  
+  echo "Current disk usage: $usage%"
+  
+  # Compare the usage with the threshold
+  if [ "$usage" -ge "$THRESHOLD" ]; then
+    echo "Warning: Disk usage has exceeded $THRESHOLD%! Current usage is $usage%."
+  else
+    echo "Disk usage is within the acceptable limit."
+  fi
+}
+
+# Call the function to check disk usage
+check_disk_usage
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+To set up email on Fedora, you’ll need to install and configure a mail client that can send emails from the command line. The most commonly used utility for this task is `mail` (part of the `mailx` package), which will allow you to send emails using your system’s mail setup or a third-party SMTP service (like Gmail, for example).
+
+Here's a step-by-step guide to set up email on Fedora using `mailx` and an SMTP server (such as Gmail):
+
+### 1. Install `mailx`
+First, install the `mailx` package. Open a terminal and run:
+
+```bash
+sudo dnf install mailx
+```
+
+This will install the `mailx` utility, which is a command-line email client.
+
+### 2. Configure `mailx` to Use an SMTP Server
+To send emails via an SMTP server (like Gmail), you'll need to configure `mailx` to use your SMTP server.
+
+#### Gmail SMTP Configuration
+If you're using Gmail, follow these steps:
+
+1. **Edit `mailx` Configuration File**:  
+   Open the mail configuration file (`/etc/mail.rc`) for editing:
+
+   ```bash
+   sudo nano /etc/mail.rc
+   ```
+
+2. **Add the following SMTP settings** (for Gmail):
+
+   ```bash
+   set smtp=smtp://smtp.gmail.com:587
+   set smtp-auth=login
+   set smtp-auth-user=your_email@gmail.com
+   set smtp-auth-password=your_password
+   set ssl-verify=ignore
+   set from=your_email@gmail.com
+   set realname="Your Name"
+   ```
+
+   Replace `your_email@gmail.com` with your actual Gmail address and `your_password` with your Gmail password. 
+
+   **Note**: It's highly recommended to use App Passwords instead of your main Gmail password, especially if you have two-factor authentication (2FA) enabled on your Google account. You can generate an App Password by following the instructions on the [Google Account page](https://myaccount.google.com/security).
+
+3. **Save and Exit**:  
+   After making the changes, save the file and exit the editor (`Ctrl+O`, then `Ctrl+X` in `nano`).
+
+### 3. Test Sending an Email
+Now that you've configured `mailx`, try sending a test email:
+
+```bash
+echo "This is a test email" | mail -s "Test Email" recipient_email@example.com
+```
+
+- Replace `recipient_email@example.com` with the email address where you want to send the test message.
+
+If everything is set up correctly, the email will be sent, and you should receive it in your inbox.
+
+### 4. Using `mailx` in the Script
+Now that your mail configuration is ready, you can integrate it into your script to send email notifications when disk usage exceeds the threshold.
+
+In the script you mentioned earlier, the `mail` command will now work as follows:
+
+```bash
+#!/bin/bash
+
+# Function to check disk usage and alert via email if it exceeds the limit
+check_disk_usage() {
+  # Set the threshold for disk usage (e.g., 80%)
+  THRESHOLD=80
+  
+  # Get the disk usage percentage for the root partition (or modify the path as needed)
+  usage=$(df / --output=pcent | tail -n 1 | tr -d '%')
+  
+  # Display current disk usage
+  echo "Current disk usage: $usage%"
+
+  # Compare the usage with the threshold
+  if [ "$usage" -ge "$THRESHOLD" ]; then
+    # Send an email notification if usage exceeds the threshold
+    SUBJECT="Warning: Disk Usage Exceeded $THRESHOLD%"
+    MESSAGE="Warning: Disk usage has exceeded $THRESHOLD%! Current usage is $usage%."
+    TO="your_email@example.com"  # Replace with your email address
+
+    echo "$MESSAGE" | mail -s "$SUBJECT" "$TO"
+    echo "Email notification sent to $TO."
+  else
+    echo "Disk usage is within the acceptable limit."
+  fi
+}
+
+# Call the function to check disk usage
+check_disk_usage
+```
+
+### 5. Troubleshooting
+- **App Passwords for Gmail**: If you use 2FA with Gmail, ensure you're using an App Password (rather than your regular Gmail password) for the SMTP authentication.
+- **Firewall**: Ensure that the necessary ports (SMTP, usually port 587) are open in your firewall. You can check your firewall settings and open ports if necessary.
+- **Mail Logs**: If emails are not sending, you can check the mail logs (`/var/log/maillog`) for error messages.
+
+### Optional: Use `msmtp` (Alternative to `mailx`)
+If you face issues with `mailx`, or if you want an alternative, you can use `msmtp`, which is a simple SMTP client. Here’s how to install and configure it:
+
+1. Install `msmtp`:
+
+   ```bash
+   sudo dnf install msmtp
+   ```
+
+2. Create a configuration file for `msmtp` at `~/.msmtprc`:
+
+   ```bash
+   nano ~/.msmtprc
+   ```
+
+   Add the following:
+
+   ```bash
+   account default
+   host smtp.gmail.com
+   port 587
+   auth on
+   user your_email@gmail.com
+   password your_password
+   from your_email@gmail.com
+   tls on
+   tls_starttls on
+   logfile ~/.msmtp.log
+   ```
+
+3. Set permissions for the file:
+
+   ```bash
+   chmod 600 ~/.msmtprc
+   ```
+
+4. Send email using `msmtp`:
+
+   ```bash
+   echo "Test email body" | msmtp recipient_email@example.com
+   ```
+
+### Conclusion
+After setting up mail on Fedora, you can send email notifications from your shell scripts by integrating them with tools like `mailx` or `msmtp`. Once everything is configured, you can receive alerts for disk usage or any other notifications you choose to send from your scripts.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Function to calculate the sum of numbers
+calculate_sum() {
+    local sum=0
+    for num in "$@"; do
+        sum=$((sum + num))
+    done
+    echo $sum
+}
+
+# Function to calculate the average
+calculate_average() {
+    local sum=$1
+    local count=$2
+    if [ "$count" -gt 0 ]; then
+        average=$((sum / count))
+        echo $average
+    else
+        echo "Error: No numbers provided to calculate average"
+    fi
+}
+
+# Main function to read numbers and calculate average
+main() {
+    echo "Enter numbers separated by spaces: "
+    read -a numbers   # Read input numbers into an array
+
+    # Calculate the sum of the numbers
+    sum=$(calculate_sum "${numbers[@]}")
+
+    # Get the count of numbers
+    count=${#numbers[@]}
+
+    # Calculate the average
+    average=$(calculate_average $sum $count)
+
+    echo "The average is: $average"
+}
+
+# Run the main function
+main
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Here is a shell script that installs a package in Fedora using functions. The script takes the package name as an argument, checks if the package is already installed, and installs it if not.
+
+```bash
+#!/bin/bash
+
+# Function to check if a package is installed
+is_package_installed() {
+    package_name=$1
+    if rpm -q "$package_name" &>/dev/null; then
+        return 0  # Package is installed
+    else
+        return 1  # Package is not installed
+    fi
+}
+
+# Function to install a package using dnf
+install_package() {
+    package_name=$1
+    if is_package_installed "$package_name"; then
+        echo "Package '$package_name' is already installed."
+    else
+        echo "Installing package '$package_name'..."
+        sudo dnf install -y "$package_name"
+        if is_package_installed "$package_name"; then
+            echo "Package '$package_name' has been successfully installed."
+        else
+            echo "Failed to install package '$package_name'."
+        fi
+    fi
+}
+
+# Main function
+main() {
+    if [ $# -ne 1 ]; then
+        echo "Usage: $0 <package_name>"
+        exit 1
+    fi
+
+    package_name=$1
+    install_package "$package_name"
+}
+
+# Run the main function
+main "$@"
+```
+
+### Explanation:
+
+1. **`is_package_installed` function:**
+   - This function checks if a package is installed using the `rpm -q` command. If the package is installed, it returns `0`; otherwise, it returns `1`.
+
+2. **`install_package` function:**
+   - This function first checks if the package is already installed by calling `is_package_installed`. If the package is not installed, it installs the package using the `dnf install` command. It then checks if the installation was successful by calling `is_package_installed` again.
+
+3. **`main` function:**
+   - This function takes the package name as an argument, checks if a package name is provided, and calls `install_package` to handle the installation.
+
+### Example Usage:
+
+To use the script, save it to a file, for example, `install_package.sh`, and then follow these steps:
+
+1. **Make the script executable:**
+   ```bash
+   chmod +x install_package.sh
+   ```
+
+2. **Run the script with the desired package name:**
+   ```bash
+   ./install_package.sh <package_name>
+   ```
+
+   For example, to install `vim`:
+
+   ```bash
+   ./install_package.sh vim
+   ```
+
+The script will check if the package is already installed, and if not, it will proceed with the installation using `dnf`.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Function to display hostname
+show_hostname() {
+  echo "Hostname: $(hostname)"
+}
+
+# Function to display operating system information
+show_os_info() {
+  echo "Operating System: $(uname -s)"
+  echo "OS Version: $(uname -r)"
+  echo "Architecture: $(uname -m)"
+}
+
+# Function to display CPU information
+show_cpu_info() {
+  echo "CPU Info: $(lscpu | grep 'Model name' | cut -d: -f2)"
+}
+
+# Function to display memory usage
+show_memory_info() {
+  echo "Memory: $(free -h | grep Mem | awk '{print $3 "/" $2}')"
+}
+
+# Function to display disk usage
+show_disk_usage() {
+  echo "Disk Usage: $(df -h / | tail -n 1 | awk '{print $3 "/" $2}')"
+}
+
+# Function to display system info briefly
+display_system_info() {
+  show_hostname
+  show_os_info
+  show_cpu_info
+  show_memory_info
+  show_disk_usage
+}
+
+# Call the function to display system info
+display_system_info
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Function to display hostname
+show_hostname() {
+  echo "Hostname: $(hostname)"
+}
+
+# Function to display operating system information
+show_os_info() {
+  echo "Operating System: $(uname -s)"
+  echo "OS Version: $(uname -r)"
+  echo "Architecture: $(uname -m)"
+}
+
+# Function to display CPU information
+show_cpu_info() {
+  echo "CPU Model: $(lscpu | grep 'Model name' | cut -d: -f2 | xargs)"
+  echo "CPU Cores: $(nproc)"
+}
+
+# Function to display memory usage (used/total, percentage)
+show_memory_info() {
+  total_mem=$(free -h | grep Mem | awk '{print $2}')
+  used_mem=$(free -h | grep Mem | awk '{print $3}')
+  mem_percent=$(free | grep Mem | awk '{print int($3/$2 * 100)}')
+  
+  echo "Memory Usage: $used_mem / $total_mem ($mem_percent%)"
+}
+
+# Function to display disk usage (used/total, percentage)
+show_disk_usage() {
+  total_disk=$(df -h / | tail -n 1 | awk '{print $2}')
+  used_disk=$(df -h / | tail -n 1 | awk '{print $3}')
+  disk_percent=$(df / | tail -n 1 | awk '{print $5}' | tr -d '%')
+  
+  echo "Disk Usage (Root): $used_disk / $total_disk ($disk_percent%)"
+}
+
+# Function to display uptime
+show_uptime() {
+  uptime_info=$(uptime -p)
+  echo "System Uptime: $uptime_info"
+}
+
+# Function to display number of logged-in users
+show_logged_in_users() {
+  users_count=$(who | wc -l)
+  echo "Logged-in Users: $users_count"
+}
+
+# Function to display network interfaces
+show_network_info() {
+  echo "Network Interfaces:"
+  ip -br addr show
+}
+
+# Function to display all system info
+display_system_info() {
+  show_hostname
+  show_os_info
+  show_cpu_info
+  show_memory_info
+  show_disk_usage
+  show_uptime
+  show_logged_in_users
+  show_network_info
+}
+
+# Call the function to display system info
+display_system_info
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
